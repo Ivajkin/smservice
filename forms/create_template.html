@@ -1,0 +1,92 @@
+<header><h1>Создать новый шаблон</h1></header>
+	<table>
+		<tr><td>
+			Название шаблона:<br>
+			<div id="t_name">
+				<input type="text" id="template_name"/>
+			</div>
+		</td></tr>
+		<td><br></td>
+		<tr><td>
+			<h3>Выберите интересующую вас категорию</h3>
+			Пол:<br>
+			<div id="sex">
+				<input type="checkbox" name="sex" value='1' > Мужской
+				<input type="checkbox" name="sex" value='2' > Женский
+			</div>
+		</td></tr>
+		<td><br></td>
+		<tr><td>
+			Образование:<br>
+			<div id="education">
+				<input type="checkbox" name="education" value='3' > Высшее
+				<input type="checkbox" name="education" value='4' > Среднее
+				<input type="checkbox" name="education" value='5' > Школьное
+				<input type="checkbox" name="education" value='6' > Отсутствует
+			</div>
+		</td></tr>
+		<td><br></td>
+		<tr><td>
+			Возраст:<br>
+			<div id="age">
+				<input type="checkbox" name="age" value='7' > < 20 лет
+				<input type="checkbox" name="age" value='8' > 20 - 30 лет
+				<input type="checkbox" name="age" value='9' > 30 - 40 лет
+				<input type="checkbox" name="age" value='10'> >40 лет
+			</div>
+		</td></tr>
+		<td><br></td>
+		<tr><td>
+			Текст сообщения:<br>
+			<div id="smstext">
+				 <textarea cols="50" rows="5" wrap="virtual" id="sms_text"></textarea>
+			</div>	
+		</td></tr>
+		<td><br></td>
+		<tr><td>
+			<div id="total"> Количество получателей : 0 </div>
+		</td></tr>
+		<tr><td>
+			<button id="save_template">Сохранить шаблон</button>
+		</td></tr>	
+		
+	</table>
+
+<script type="text/javascript">
+	var total_receivers = 0;
+	var array = [];
+	$("input:checkbox").click(
+	function()
+	{
+		
+		$("input:checkbox:checked").each(function(indx,element) {
+		array[array.length] = $(element).val();
+		$.post('server.logic/calculate_template_audience.php', { data: JSON.stringify(array) , OrgName: OrgName } , function(data) {	
+			$("#total").html("Количество получателей : " + data);
+			total_receivers = data;
+			});
+		});
+	});
+	$('#save_template').click( function() {
+		$.post('server.logic/save_template.php', { 
+				data: JSON.stringify(array) , 
+				OrgName: OrgName , 
+				TName: $('#template_name').val() , 
+				MessageText: $('#sms_text').val() } , 
+			function(data) {	
+				alert(data);	});
+				
+		});
+/*		
+	$('#calculate_receivers_count').click(function() {	
+		var array = [];
+		$("input:checkbox:checked").each(function(indx,element) {
+			array[array.length] = $(element).val();
+		})
+		$.post('server.logic/calculate_template_audience.php', { data: JSON.stringify(array) , OrgName: OrgName } , function(data) {
+			alert(data);
+		});
+	});
+	<button id="calculate_receivers_count">Подсчитать количество получателей</button>
+*/
+</script>

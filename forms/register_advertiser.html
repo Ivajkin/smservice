@@ -1,0 +1,15 @@
+<header><h1>Регистрация пользователя</h1></header>
+	<table>
+		<tr><td><label for="OrgName">Название организации</label></td><td><input type="text" id="OrgName"/></td></tr>
+		<tr><td><label for="email">Email</label></td><td><input type="text" id="email"/></td></tr>
+		<tr><td colspan="2"><input type="checkbox" id="agreed">cогласен с <a href="#">условиями работы</a> и <a href="#">правилами пользования сервисом</a></input></td></tr>
+		<tr><td colspan="2"><input type="submit" id="register" value="РЕГИСТРАЦИЯ"/></td></tr>
+	</table>
+	
+<script type="text/javascript">
+	$('#register').click(function() {
+		$.post('server.logic/submit_advertiser_attributes.php',{ OrgName: $('#OrgName').val() , email: $('#email').val() } , function(data) { alert(data); });
+		Form.load('control_panel_advertiser');
+		OrgName = $('#OrgName').val();
+	});
+</script>

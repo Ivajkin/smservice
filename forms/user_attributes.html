@@ -1,0 +1,45 @@
+<header><h1>О себе</h1></header>
+	<table>
+		<tr><td>
+			Пол:<br>
+			<div id="sex">
+				<input type="radio" name="sex" value='1' checked > Мужской
+				<input type="radio" name="sex" value='2' > Женский
+			</div>
+		</td><td></td></tr>
+		<td><br></td>
+		<tr><td>
+			Образование:<br>
+			<div id="education">
+				<input type="radio" name="education" value='3' checked > Высшее
+				<input type="radio" name="education" value='4' > Среднее
+				<input type="radio" name="education" value='5' > Школьное
+				<input type="radio" name="education" value='6' > Отсутствует
+			</div>
+		</td><td></td></tr>
+		<td><br></td>
+		<tr><td>
+			Возраст:<br>
+			<div id="age">
+				<input type="radio" name="age" value='7' checked > < 20 лет
+				<input type="radio" name="age" value='8' > 20 - 30 лет
+				<input type="radio" name="age" value='9' > 30 - 40 лет
+				<input type="radio" name="age" value='10'> >40 лет
+			</div>
+		</td><td></td></tr>
+		<td><br></td>
+		<tr><td>
+			<button id="submit">Сохранить</button>
+		</td><td></td></tr>
+		
+	</table>
+
+<script type="text/javascript">
+
+	$('#submit').click(function() {
+		$.post('server.logic/submit_user_attributes.php', { sex: $('input[name=sex]:checked').val(), education: $('input[name=education]:checked').val(), age: $('input[name=age]:checked').val() , uphone: user } , function(data) {
+			alert(data);
+		});
+	});
+	
+</script>

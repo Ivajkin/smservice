@@ -1,0 +1,22 @@
+<style>
+	#balance { width: 100px; float: right; top: 0px; }
+	#balance #amount { color: red; }
+</style>
+
+<div id="balance">
+	Баланс: <div id="amount">0 руб 00 коп</div>
+	<button>ПОПОЛНИТЬ</button>
+</div>
+
+<header><h1>Панель управления</h1></header>
+<h2>Шаблоны целевой аудитории:</h2>
+<div id="templates"></div>
+<button id="create_new_template">Создать новый шаблон целевой аудитории</button>
+
+<script type="text/javascript">
+
+	$('#create_new_template').click(function() {
+		Form.load('create_template');
+	});
+	
+</script>

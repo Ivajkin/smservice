@@ -1,0 +1,2 @@
+POST["?"]
+advertiser -> mysqli

@@ -1,0 +1,25 @@
+<header><h1>Регистрация пользователя</h1></header>
+	<table>
+		<tr><td><label for="name">ФИО</label></td><td><input type="text" id="name"/></td></tr>
+		<tr><td><label for="phone">Основной мобильный телефон <p>для получения рассылки</p></label></td><td><input type="text" id="phone"/></td></tr>
+		<tr><td colspan="2"><input type="checkbox" id="agreed">cогласен получать смс-рассылку (см.: <a href="#" id="terms">условия</a>, на которых производится рассылка и <a href="#" id="rules">правила пользования сервисом</a>)</input></td></tr>
+		<tr><td colspan="2"><button id="register">РЕГИСТРАЦИЯ</button></td></tr>
+	</table>
+
+<script type="text/javascript">
+	$('#terms').click(function() {
+		Form.toolbar('register_user_terms');
+	});
+	$('#rules').click(function() {
+		Form.toolbar('register_user_rules');
+	});
+	
+	$('#register').click(function() {
+		$.post('server.logic/register_user.php', { name: $('#name' ).val() , phone: $('#phone').val() } , function(data) {
+			alert(data);
+		Form.load('user_attributes');
+		});
+		user = $('#phone').val();
+	});
+	
+</script>
