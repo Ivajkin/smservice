@@ -47,7 +47,7 @@
 			<div id="total"> Количество получателей : 0 </div>
 		</td></tr>
 		<tr><td>
-			<button id="save_template">Сохранить шаблон</button>
+			<button id="save_and_send_template">Сохранить и отправить шаблон</button>
 		</td></tr>	
 		
 	</table>
@@ -59,7 +59,8 @@
 	function()
 	{
 		
-		$("input:checkbox:checked").each(function(indx,element) {
+		$("input:checkbox:checked").each(function(indx,element) 
+		{
 		array[array.length] = $(element).val();
 		$.post('server.logic/calculate_template_audience.php', { data: JSON.stringify(array) , OrgName: OrgName } , function(data) {	
 			$("#total").html("Количество получателей : " + data);
@@ -67,7 +68,8 @@
 			});
 		});
 	});
-	$('#save_template').click( function() {
+	$('#save_and_send_template').click( function() 
+	{
 		$.post('server.logic/save_template.php', { 
 				data: JSON.stringify(array) , 
 				OrgName: OrgName , 
@@ -77,6 +79,7 @@
 				alert(data);	});
 				
 		});
+
 /*		
 	$('#calculate_receivers_count').click(function() {	
 		var array = [];
