@@ -2,17 +2,22 @@
 <?php
 	#POST["?"]
 	#user -> mysqli
-	$db_link = mysql_connect( "localhost" , "root" , "") or die("Cannot connect to database");
-	mysql_select_db( "SMS_Service" , $db_link );
-	$query = "INSERT INTO client( OrgName , EMail , OrgActivity , OrgPhone , ContactPerson , ContactPhone ) values( '" 
+	//$mysqli = new mysqli( 'localhost' , 'core5429_sms' , 'SLnrx29n6sKb' , 'core5429_smservice' );
+	$salt = 'mgtJFizR7oBxqqL6fG1Dq9';
+	$pass = crypt( $_POST["pass"] , '$2a$10$'.$salt );
+	$mysqli = new mysqli('localhost' , 'root' , '' , 'sms_service' );
+	if( $mysqli->errno == 0 )
+	$query = "INSERT INTO Client( OrgName , EMail , OrgActivity , OrgPhone , ContactPerson , ContactPhone , Password ) values( '" 
 		.$_POST["OrgName"]. "' , '" 
 		.$_POST["email"]. "' ,
 		'random' ,
-		8855868 ,
-		'James Hook' ,
-		4459301 )";
-	mysql_query( $query , $db_link );
-	mysql_close( $db_link );
+		000000 ,
+		'James Hook' ,"
+		.$_POST["contact_phone"]." , '"
+		.$pass.	"' ) ";
+	if( !$mysqli->query( $query ) )
+		printf($mysqli->error);
+	$mysqli->close();
 	echo $query;
 ?>
 

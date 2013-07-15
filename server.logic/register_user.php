@@ -2,10 +2,14 @@
 <?php
 	#POST["?"]
 	#user -> mysqli
-	$db_link = mysql_connect( "localhost" , "root" , "") or die("Cannot connect to database");
-	mysql_select_db( "SMS_Service" , $db_link );
-	$query = "INSERT INTO receiver(UName,UPhone,VKAccount) values( '" . $_POST["name"] . "' , " . $_POST["phone"] . " , 'ignored')";
-	mysql_query( $query , $db_link );
-	mysql_close( $db_link );
+	$salt = 'mgtJFizR7oBxqqL6fG1Dq9';
+	
+	//$mysqli = new mysqli('localhost' , 'core5429_sms' , 'SLnrx29n6sKb' , 'core5429_smservice' );
+	$mysqli = new mysqli('localhost' , 'root' , '' , 'sms_service' );
+	$p_hash = crypt($_POST["password"],'$2a$10$'.$salt);
+	$query = "INSERT INTO receiver(UName,UPhone,VKAccount,Password) values( '" . $_POST["name"] . "' , " . $_POST["phone"] . " , 'ignored' , '" .$p_hash. "')";
+	$mysqli->query( $query );
+	if( $mysqli->errno )	echo $mysqli->error;
+	$mysqli->close();
 	echo $query;
 ?>

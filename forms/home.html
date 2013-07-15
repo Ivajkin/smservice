@@ -1,6 +1,6 @@
 <style>
-	#register-user-button, #register-advertiser-button { width: 400px; height: 105px; font-size: 0.8em; margin-left: 90px; margin-bottom: 10px; }
-	#register-user-button img, #register-advertiser-button img { float: left; }
+	#register-user-button, #register-advertiser-button , #login_button { width: 400px; height: 105px; font-size: 0.8em; margin-left: 90px; margin-bottom: 10px; }
+	#register-user-button img, #register-advertiser-button img , #login_button img { float: left; }
 </style>
   
    <header><h1>Двухсторонняя платформа для смс рассылок. Рассылка смс по собственной базе клиентов.</h1></header>
@@ -17,7 +17,12 @@
 		<h1>Получить целевую аудиторию</h1>
 		<p>Зарегистрироваться как рекламодатель</p>
 	</button>
-
+	<button id="login_button">
+		<img src="img/key.png"/>
+		<h1>Уже зарегестрированы?</h1>
+		<p>Войдите в систему</p>
+	</button>
+	
 <script type="text/javascript">
 	$('#register-user-button').click(function() {
 		//Form.load('register_user');
@@ -25,5 +30,8 @@
 	});
 	$('#register-advertiser-button').click(function() {
 		Form.load('register_advertiser');
+	});
+	$('#login_button').click(function() {
+		Form.load('login_form');
 	});
 </script>

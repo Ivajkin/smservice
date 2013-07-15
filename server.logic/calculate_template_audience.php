@@ -9,7 +9,7 @@
 	$array_size = count($decoded);
 	if($array_size != 0)
 	{
-		$mysqli = new mysqli('localhost' , 'root' , '' , 'sms_service' );
+		$mysqli = new mysqli('localhost' , 'core5429_sms' , 'SLnrx29n6sKb' , 'core5429_smservice' );
 		$query = "SELECT COUNT(DISTINCT UPhone) FROM ( SELECT * FROM receiver_category where ACode = " . $decoded[0] ;
 		for( $i = 1 ; $i < $array_size ; $i++ )
 		{	$query .= " or ACode = " . $decoded[$i];		}
