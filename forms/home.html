@@ -1,6 +1,22 @@
 <style>
 	#register-user-button, #register-advertiser-button , #login_button { width: 400px; height: 105px; font-size: 0.8em; margin-left: 90px; margin-bottom: 10px; }
 	#register-user-button img, #register-advertiser-button img , #login_button img { float: left; }
+	#loading { display: none; }
+	.loader {
+	    position: fixed;
+	    top: 50%;
+
+	    left: 50%;
+	    margin-left: -18px; /* половина щирины gif */
+	    margin-top: -18px; /* половина высоты gif */
+
+	    text-align:center;
+	    z-index:9999;
+             
+	    width: 36px; /* ширина gif */
+
+	    height: 38px; /*высота gif +2px для того, чтобы пофиксить баг IE8 */
+	}
 </style>
   
    <header><h1>Двухсторонняя платформа для смс рассылок. Рассылка смс по собственной базе клиентов.</h1></header>
@@ -23,7 +39,19 @@
 		<p>Войдите в систему</p>
 	</button>
 	
+	<div id="loading" class="loader"><img src="img/loading.gif"/></div>
+	
 <script type="text/javascript">
+
+	$.ajaxSetup({
+	    beforeSend:function(){
+	        $("#loading").show();
+	    },
+	    complete:function(){
+	        $("#loading").hide();
+	    }
+	});
+	
 	$('#register-user-button').click(function() {
 		//Form.load('register_user');
 		Form.load('register_user');
@@ -34,4 +62,5 @@
 	$('#login_button').click(function() {
 		Form.load('login_form');
 	});
+	
 </script>
