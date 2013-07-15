@@ -1,0 +1,23 @@
+<header>
+	<h1>Личный кабинет</h1>
+</header>
+<table>
+	<div id="submit_area">
+	<tr>
+		<td><label for="name">Введите код:</label></td><td>
+		<input type="text" id="code" />
+		<button id="confirm_code">+</button>
+		</td>
+	</tr>
+	</div>
+</table>
+
+<script type="text/javascript">
+	$('#confirm_code').click(function() {
+		//$("#submit_area").prepend('<tr><td><label for="name">Введите код:</label></td><td><input type="text" id="code"/><button id="submit_code">+</button>	</td></tr>');
+		$.post('server.logic/confirm_code.php',{ code: $("#confirm_code".val() , phone: user) }, function(data)
+		{
+			alert(data);
+		})
+	});
+</script>

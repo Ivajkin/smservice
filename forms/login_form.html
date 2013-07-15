@@ -1,0 +1,42 @@
+﻿<header>
+	<h1>Вход в личный кабинет</h1>
+</header>
+<table>
+	<tr>
+		<td><label for="phone">Номер телефона</label></td><td>
+		<input type="text" id="phone"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="pass">Пароль</label></td><td>
+		<input type="text" id="pass"/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<button id="login">
+			Войти
+		</button></td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	$('#login').click(function() {
+		$.post('server.logic/login.php', {
+			pass : $('#pass').val(),
+			phone : $('#phone').val()
+		}, function(data) {
+			alert(data);
+			if (data == 0)
+			{	//Form.load('user_profile');
+				alert("You logged in as Receiver ");
+			}
+			else if( data == 1)
+			{
+				 alert("You logged in as Advertiser");
+			}
+			else alert("Shit happens");
+		});
+	});
+	//user = phone:$('#phone').val(); 
+</script>
