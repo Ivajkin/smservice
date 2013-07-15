@@ -1,12 +1,9 @@
---- At first ,  we need to create and connect to database
---CREATE database SMS_Service ;
---USE SMS_Service ;
-
--- This table describes sms-receivers
-CREATE TABLE receiver (
+﻿CREATE TABLE receiver (
 	UName varchar(50) not null ,
 	UPhone bigint unsigned ,
 	VKAccount varchar(20) not null ,
+	
+	Password varchar(60) not null,
 	
 	primary key ( UPhone )
 );
@@ -26,7 +23,7 @@ CREATE TABLE audience (
 	AS_Code tinyint unsigned ,
 	
 	primary key ( ACode ) ,
-	foreign key ( AS_Code ) references audience_specification( AS_Code )
+	foreign key ( AS_Code ) references audience_specification( AS_Code ) ON DELETE CASCADE
 );
 
 -- Receiver features 
@@ -35,8 +32,8 @@ CREATE TABLE receiver_category (
 	ACode tinyint unsigned ,
 	
 	primary key ( UPhone , ACode ) ,
-	foreign key ( UPhone ) references receiver( UPhone ) ,
-	foreign key ( ACode ) references audience( ACode )
+	foreign key ( UPhone ) references receiver( UPhone ) ON DELETE CASCADE,
+	foreign key ( ACode ) references audience( ACode ) ON DELETE CASCADE
 );
 
 -- Advertiser table
@@ -54,17 +51,17 @@ CREATE TABLE Client (
 	primary key ( CID )
 );
 
--- Templates
 CREATE TABLE Template (
 	TTotalReceivers bigint unsigned,
 	TConfirmedCount bigint unsigned,
 	TName varchar(128) not null ,
 	TText varchar(256) ,
-	CID integer unsigned not null ,--unique,
+	CID integer unsigned not null ,
 	TID bigint unsigned auto_increment ,
+	Password varchar(60) not null,
 	
 	primary key ( TID ) ,
-	foreign key ( CID ) references Client( CID )
+	foreign key ( CID ) references Client( CID ) ON DELETE CASCADE
 );
 
 CREATE TABLE TemplateAudience (
@@ -72,8 +69,8 @@ CREATE TABLE TemplateAudience (
 	ACode tinyint unsigned ,
 	
 	primary key ( TID , ACode ) ,
-	foreign key ( TID ) references Template( TID ) ,
-	foreign key ( ACode ) references audience( ACode ) 
+	foreign key ( TID ) references Template( TID ) ON DELETE CASCADE,
+	foreign key ( ACode ) references audience( ACode ) ON DELETE CASCADE
 );
 
 CREATE TABLE UnconfirmedSMS (
@@ -81,9 +78,9 @@ CREATE TABLE UnconfirmedSMS (
 	TID bigint unsigned ,
 	ConformCode smallint unsigned ,
 	
-	primary key ( UPhone , ConformCode ) ,
-	foreign key ( UPhone ) references receiver( UPhone ) ,
-	foreign key ( TID ) references Template( TID )
+	primary key ( TID , ConformCode ) ,
+	foreign key ( UPhone ) references receiver( UPhone ) ON DELETE CASCADE,
+	foreign key ( TID ) references Template( TID ) ON DELETE CASCADE
 );
 
 --########################################################
