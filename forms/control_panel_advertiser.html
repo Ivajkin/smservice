@@ -10,11 +10,15 @@
 
 <header><h1>Панель управления</h1></header>
 <h2>Шаблоны целевой аудитории:</h2>
-<div id="templates"></div>
+
 <button id="create_new_template">Создать новый шаблон целевой аудитории</button>
+<div id="templates"></div>
 
 <script type="text/javascript">
-
+	$.post("server.logic/template_info.php", {	OrgName: OrgName }	, function(data)
+		{
+			$('#templates').append(data);
+		});
 	$('#create_new_template').click(function() {
 		Form.load('create_template');
 	});

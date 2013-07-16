@@ -26,16 +26,19 @@
 			pass : $('#pass').val(),
 			phone : $('#phone').val()
 		}, function(data) {
-			alert(data);
 			if (data == 0)
-			{	//Form.load('user_profile');
-				alert("You logged in as Receiver ");
+			{	
+				Form.load('user_profile');	user = $('#phone').val() ;
 			}
 			else if( data == 1)
 			{
-				 alert("You logged in as Advertiser");
+				 $.post("server.logic/org_name_by_contact_phone.php" , { phone : $('#phone').val()  } , function(data) 
+				 { 
+				 	if(data == -1) alert("Error. Try again.");
+				 	else {	Form.load('control_panel_advertiser');	OrgName = data.substr(2);	alert("OrgName: " + OrgName) ;}
+				 });
 			}
-			else alert("Shit happens");
+			else alert("There is problems with logging in");
 		});
 	});
 	//user = phone:$('#phone').val(); 

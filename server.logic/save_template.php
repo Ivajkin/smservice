@@ -4,22 +4,26 @@
 
 	$send_api = new Transport();
 	
-	$balance = $send_api->balance();
+	//$balance = $send_api->balance();
 	
-	if($balance > 10) 
+	//if($balance > 10) 
 	{
 		$json = ini_get('magic_quotes_gpc') == 1 ? stripslashes( $_POST['data'] ) : $_POST['data'];
 		$decoded_data = json_decode($json); // Идентификаторы аудиторий
+		echo $_POST['OrgName'];
 	
-		$mysqli = new mysqli('localhost' , 'core5429_sms' , 'SLnrx29n6sKb' , 'core5429_smservice' );
+		//$mysqli = new mysqli('localhost' , 'core5429_sms' , 'SLnrx29n6sKb' , 'core5429_smservice' );
+		$mysqli = new mysqli('localhost' , 'root' , '' , 'sms_service' );
 		// Запись шаблона в БД
 			// Определяем идентификатор клиента ( CID ) 
-			$QResult = $mysqli->query("SELECT CID FROM Client where OrgName = '" . $_POST['OrgName'] ."'");
+			$QResult = $mysqli->query("SELECT CID FROM Client where OrgName = '" . $_POST['OrgName'] ."'");			
 			$QResult = $QResult->fetch_row();
 			$CID = $QResult[0];
+			printf("\nCID = %s",$CID);
 			
 			// Добавляем запись о шаблоне в таблицу шаблонов
 			$query = "INSERT INTO Template VALUES( 0 , 0 , '" . $_POST['TName'] . "' , '" . $_POST['MessageText'] . "' , " .$CID. " , 0 )";
+			if($mysqli->errno)	{	echo $mysqli->error;return;	}
 			$mysqli->query($query);
 			
 			// Получаем идентификатор только что созданного шаблона
@@ -28,6 +32,7 @@
 			$QResult = $mysqli->query($query);
 			$QResult = $QResult->fetch_row();
 			$TID = $QResult[0];	// Идентификатор шаблона
+			printf("\nTID = %s",$TID);
 			
 			// Добавление записей для хранения выбранной аудитории шаблона
 			$array_size = count($decoded_data);
@@ -88,5 +93,6 @@
 			}
 			 */
 			$mysqli->query("UPDATE Template SET TTotalReceivers = " .$receivers_amount . " WHERE TID = ".$TID ); 
+			$mysqli->close();
 	}
 ?>
